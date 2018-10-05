@@ -51,6 +51,9 @@ func (s *stmt) Exec(args []driver.Value) (driver.Result, error) {
 // Close closes the statement.
 func (s *stmt) Close() error {
 	if atomic.CompareAndSwapInt32(&s.closed, 0, 1) {
+		if s.c != nil {
+			s.c.Close()
+		}
 		s.c = nil
 	}
 	return nil
