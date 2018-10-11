@@ -183,7 +183,8 @@ func (c *conn) exec(ctx context.Context, query string, args []driver.Value) (dri
 	if err != nil {
 		return nil, err
 	}
-	_, err = c.doRequest(ctx, req)
+	body, err := c.doRequest(ctx, req)
+	body.Close()
 	return emptyResult, err
 }
 
