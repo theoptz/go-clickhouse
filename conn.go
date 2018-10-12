@@ -184,7 +184,9 @@ func (c *conn) exec(ctx context.Context, query string, args []driver.Value) (dri
 		return nil, err
 	}
 	body, err := c.doRequest(ctx, req)
-	body.Close()
+	if body != nil {
+		body.Close()
+	}
 	return emptyResult, err
 }
 
